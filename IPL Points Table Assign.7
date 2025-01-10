@@ -1,0 +1,102 @@
+import React, { useEffect, useState } from "react";
+
+const App = () => {
+  const [teams, setTeams] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from the API
+    fetch("https://my-json-server.typicode.com/FreSauce/json-ipl/data")
+      .then((response) => response.json())
+      .then((data) => {
+        // Sort the data by NRR in ascending order
+        const sortedTeams = data.sort((a, b) => a.NRR - b.NRR);
+        setTeams(sortedTeams);
+      })
+      .catch((error) => console.error("Error fetching data:", error));
+  }, []);
+
+  const styles = {
+    container: {
+      maxWidth: "800px",
+      margin: "50px auto",
+      padding: "20px",
+      backgroundColor: "#fff",
+      borderRadius: "8px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+      textAlign: "center",
+      fontFamily: "Arial, sans-serif",
+    },
+    heading: {
+      fontSize: "24px",
+      marginBottom: "20px",
+      color: "#333",
+    },
+    table: {
+      width: "100%",
+      borderCollapse: "collapse",
+      marginTop: "20px",
+    },
+    th: {
+      backgroundColor: "#4caf50",
+      color: "white",
+      padding: "12px",
+      textAlign: "center",
+      border: "1px solid #ddd",
+    },
+    td: {
+      padding: "12px",
+      textAlign: "center",
+      border: "1px solid #ddd",
+      color: "#555",
+    },
+    rowEven: {
+      backgroundColor: "#f2f2f2",
+    },
+    rowHover: {
+      ":hover": {
+        backgroundColor: "#e8f5e9",
+      },
+    },
+  };
+
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.heading}>IPL 2022 Points Table</h1>
+      <table style={styles.table}>
+        <thead>
+          <tr>
+            <th style={styles.th}>Position</th>
+            <th style={styles.th}>Team</th>
+            <th style={styles.th}>Played</th>
+            <th style={styles.th}>Won</th>
+            <th style={styles.th}>Lost</th>
+            <th style={styles.th}>Points</th>
+            <th style={styles.th}>NRR</th>
+          </tr>
+        </thead>
+        <tbody>
+          {teams.map((team, index) => (
+            <tr
+              key={team.id}
+              style={
+                index % 2 === 0
+                  ? { ...styles.td, ...styles.rowEven }
+                  : styles.td
+              }
+            >
+              <td style={styles.td}>{index + 1}</td>
+              <td style={styles.td}>{team.Team}</td>
+              <td style={styles.td}>{team.Played}</td>
+              <td style={styles.td}>{team.Won}</td>
+              <td style={styles.td}>{team.Lost}</td>
+              <td style={styles.td}>{team.Points}</td>
+              <td style={styles.td}>{team.NRR}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default App;
