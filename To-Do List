@@ -1,0 +1,100 @@
+import React, { useState } from 'react';
+
+const TodoApp = () => {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState('');
+
+  // Add a new task
+  const addTask = () => {
+    if (newTask.trim() === '') return; // Prevent empty tasks
+    setTasks([...tasks, newTask]);
+    setNewTask(''); // Clear input field
+  };
+
+  // Remove a task
+  const removeTask = (index) => {
+    setTasks(tasks.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div style={styles.container}>
+      <h1>To-Do List</h1>
+      <div style={styles.inputContainer}>
+        <input
+          style={styles.input}
+          type="text"
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+          placeholder="Add a new task"
+        />
+        <button style={styles.addButton} onClick={addTask}>
+          Add
+        </button>
+      </div>
+      <ul style={styles.list}>
+        {tasks.map((task, index) => (
+          <li key={index} style={styles.listItem}>
+            <span>{task}</span>
+            <button style={styles.deleteButton} onClick={() => removeTask(index)}>
+              Delete
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+const styles = {
+  container: {
+    maxWidth: '400px',
+    margin: '50px auto',
+    textAlign: 'center',
+    fontFamily: 'Arial, sans-serif',
+  },
+  inputContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '20px',
+  },
+  input: {
+    width: '70%',
+    padding: '10px',
+    fontSize: '16px',
+    marginRight: '10px',
+    border: '1px solid #ccc',
+    borderRadius: '5px',
+  },
+  addButton: {
+    padding: '10px 20px',
+    backgroundColor: '#4caf50',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  },
+  list: {
+    listStyle: 'none',
+    padding: '0',
+  },
+  listItem: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#f9f9f9',
+    marginBottom: '10px',
+    padding: '10px',
+    borderRadius: '5px',
+    border: '1px solid #ddd',
+  },
+  deleteButton: {
+    padding: '5px 10px',
+    backgroundColor: '#f44336',
+    color: 'white',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+  },
+};
+
+export default TodoApp;
