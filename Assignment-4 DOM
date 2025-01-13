@@ -1,0 +1,140 @@
+// 4.1 //
+
+function swapTheme() {
+    // Get references to the elements
+    const appDiv = document.getElementById('app');
+    const swapButton = document.getElementById('swap');
+    
+    // Check current theme
+    const isDay = appDiv.classList.contains('day');
+    
+    if (isDay) {
+        // Switch to night theme
+        appDiv.classList.remove('day');
+        appDiv.classList.add('night');
+        
+        swapButton.classList.remove('button_day');
+        swapButton.classList.add('button_night');
+    } else {
+        // Switch to day theme
+        appDiv.classList.remove('night');
+        appDiv.classList.add('day');
+        
+        swapButton.classList.remove('button_night');
+        swapButton.classList.add('button_day');
+    }
+}
+
+// 4.2 //
+
+/* JavaScript */
+
+function createDiv(width, height, text) {
+    // Create a new div element
+    const newDiv = document.createElement('div');
+
+    // Set the width and height with 'px' unit
+    newDiv.style.width = width + 'px';
+    newDiv.style.height = height + 'px';
+
+    // Set the text content of the div
+    newDiv.textContent = text;
+
+    // Find the container and append the new div
+    const container = document.getElementById('container');
+    container.appendChild(newDiv);
+}
+ /* CSS */
+
+#container {
+    display: flex;
+    flex-wrap: wrap;  
+    gap: 10px;        
+}
+
+#container div {
+    background-color: #f0f0f0; 
+    border: 1px solid #ccc;    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* 4.3 */
+
+function toggleVisibility() {
+    // Get the paragraph element
+    const paragraph = document.getElementById('useless-paragraph');
+    
+    // Toggle the display property between 'none' and 'block'
+    if (paragraph.style.display === 'none') {
+        paragraph.style.display = 'block'; // Show the paragraph
+    } else {
+        paragraph.style.display = 'none'; // Hide the paragraph
+    }
+}
+
+/* 4.4 */
+
+
+document.getElementById('colorchange').addEventListener('click', () => {
+    const color = document.getElementById('colorbox').value;
+    const textContainer = document.getElementById('text-container');
+    textContainer.style.color = color;
+});
+
+// Change font size based on slider value
+document.getElementById('fontsize').addEventListener('input', (event) => {
+    const fontSize = event.target.value + 'px';
+    const textContainer = document.getElementById('text-container');
+    textContainer.style.fontSize = fontSize;
+});
+
+// Toggle Italics
+document.getElementById('italic').addEventListener('click', () => {
+    const textContainer = document.getElementById('text-container');
+    textContainer.style.fontStyle =
+        textContainer.style.fontStyle === 'italic' ? 'normal' : 'italic';
+});
+
+// Toggle Underline
+document.getElementById('underline').addEventListener('click', () => {
+    const textContainer = document.getElementById('text-container');
+    textContainer.style.textDecoration =
+        textContainer.style.textDecoration === 'underline' ? 'none' : 'underline';
+});
+
+// Toggle Bold
+document.getElementById('bold').addEventListener('click', () => {
+    const textContainer = document.getElementById('text-container');
+    textContainer.style.fontWeight =
+        textContainer.style.fontWeight === 'bold' ? 'normal' : 'bold';
+});
+
+// Change font family based on dropdown selection
+document.getElementById('list').addEventListener('change', (event) => {
+    const fontFamily = event.target.value;
+    const textContainer = document.getElementById('text-container');
+    textContainer.style.fontFamily = fontFamily;
+});
+
+// Get and display current CSS properties
+document.getElementById('getstyle').addEventListener('click', () => {
+    const textContainer = document.getElementById('text-container');
+    const computedStyles = window.getComputedStyle(textContainer);
+    
+    const cssProps = `
+        color: ${computedStyles.color};
+        font-size: ${computedStyles.fontSize};
+        font-family: ${computedStyles.fontFamily};
+        text-decoration: ${computedStyles.textDecoration};
+        font-style: ${computedStyles.fontStyle};
+        font-weight: ${computedStyles.fontWeight};
+    `.trim().replace(/\s+/g, ' ');
+
+    document.getElementById('css-props').innerText = cssProps;
+});// javascript code goes here
